@@ -12,6 +12,8 @@ set shiftwidth=4
 "setting for scroll
 set scrolloff=3
 
+"highlight cursorline
+set cursorline
 	augroup cch
 		autocmd! cch
 		autocmd WinLeave * set nocursorline
@@ -19,7 +21,6 @@ set scrolloff=3
 	augroup END
 :hi clear CursorLine
 :hi CursorLine gui=underline
-
 
 "extend cursorMove
 set whichwrap=b,s,h,l,<,>,[,],~
