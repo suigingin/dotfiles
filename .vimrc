@@ -6,14 +6,12 @@ syntax on
 
 "intendSetting
 set autoindent
-set tabstop=4
+set tabstop=5
 set shiftwidth=4
 
 "setting for scroll
 set scrolloff=3
 
-"highlight cursorline
-set cursorline
 	augroup cch
 		autocmd! cch
 		autocmd WinLeave * set nocursorline
@@ -27,6 +25,10 @@ set cursorline
 set whichwrap=b,s,h,l,<,>,[,],~
 nnoremap j gj
 nnoremap k gk
+
+"number on/off
+nnoremap <C-o> :set number<CR><Esc>
+nnoremap <C-n> :set nonumber<CR><Esc>
 
 "setting for color
 set t_Co=256
@@ -50,7 +52,7 @@ set ruler
 
 "show unvisibleWord
 set list
-set listchars=tab:^_,trail:_,extends:>,precedes:<
+set listchars=tab:>\ ,trail:_,extends:^,precedes:<
 
 "show 2byteSpace
 highlight ZenkakuSpace cterm=underline ctermbg=red guibg=#666666
