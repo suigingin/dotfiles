@@ -2,6 +2,7 @@
 set nocompatible
 
 "set syntacColor
+colorscheme molokai
 syntax on
 
 "intendSetting
@@ -12,6 +13,9 @@ set shiftwidth=4
 "setting for scroll
 set scrolloff=3
 
+"no mouse
+set mouse=
+
 "highlight cursorline
 set cursorline
 	augroup cch
@@ -21,6 +25,7 @@ set cursorline
 	augroup END
 :hi clear CursorLine
 :hi CursorLine gui=underline
+
 
 "extend cursorMove
 set whichwrap=b,s,h,l,<,>,[,],~
@@ -33,7 +38,7 @@ nnoremap <C-n> :set nonumber<CR><Esc>
 
 "setting for color
 set t_Co=256
-set background=light
+set background=dark
 
 "enable backSpace
 set backspace=start,eol,indent
@@ -62,8 +67,9 @@ au WinEnter * let w:m3 = matchadd("ZenkakuSpace", '　')
 
 "setting for search
 set incsearch
-set hlsearch "Take nohl command to release highLight
+"set hlsearch "Take nohl command to release highLight
 nnoremap <C-h> :nohlsearch<CR><Esc>
+set nohlsearch
 
 "Don'make swapFile
 set noswapfile
@@ -103,3 +109,37 @@ function! s:GetHighlight(hi)
   let hl = substitute(hl, 'xxx', '', '')
   return hl
 endfunction
+
+
+""plugin
+"taglist
+set tags=tags;
+nnoremap <C-t> :TlistToggle<CR><Esc>
+
+"highlight StatusLine ctermfg=black ctermbg=grey
+"highlight CursorLine ctermfg=none ctermbg=darkgray cterm=none
+highlight MatchParen ctermfg=none ctermbg=darkgray
+"highlight Comment ctermfg=DarkGreen ctermbg=NONE
+highlight Directory ctermfg=Darkgreen ctermbg=NONE
+
+set wildmenu wildmode=list:full
+
+
+""mapping
+"      normal visual insert cmdline
+" map       o      o      x       x
+" map!      x      x      o       o
+" nmap      o      x      x       x
+" vmap      x      o      x       x
+" imap      x      x      o       x
+" cmap      x      x      x       o
+"
+"map!
+map! <C-e> fprintf(stderr," \n",);
+"nmap
+nmap <silent> <Tab> 15<Right>
+nmap <silent> <S-Tab> 15<Left>
+nmap ; :
+nmap n nzz
+nmap N Nzz
+
