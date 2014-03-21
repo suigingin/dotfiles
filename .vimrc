@@ -139,7 +139,6 @@ map! <C-e> fprintf(stderr," \n",);
 "nmap
 nmap <silent> <Tab> 15<Right>
 nmap <silent> <S-Tab> 15<Left>
-nmap ; :
 nmap n nzz
 nmap N Nzz
 
