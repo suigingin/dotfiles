@@ -7,7 +7,7 @@ syntax on
 
 "intendSetting
 set autoindent
-set tabstop=5
+set tabstop=4
 set shiftwidth=4
 
 "setting for scroll
@@ -33,7 +33,7 @@ nnoremap j gj
 nnoremap k gk
 
 "number on/off
-nnoremap <C-o> :set number<CR><Esc>
+nnoremap <C-o> :set number<CR>
 nnoremap <C-n> :set nonumber<CR><Esc>
 
 "setting for color
@@ -69,7 +69,7 @@ au WinEnter * let w:m3 = matchadd("ZenkakuSpace", '　')
 set incsearch
 "set hlsearch "Take nohl command to release highLight
 nnoremap <C-h> :nohlsearch<CR><Esc>
-set nohlsearch
+set hlsearch
 
 "Don'make swapFile
 set noswapfile
@@ -141,4 +141,7 @@ nmap <silent> <Tab> 15<Right>
 nmap <silent> <S-Tab> 15<Left>
 nmap n nzz
 nmap N Nzz
+"nnoremap
+"To use this mapping, we must execure this command "stty -ixon -ixoff"
+nnoremap <C-q> :shell<CR>
 
