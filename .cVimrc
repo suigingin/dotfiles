@@ -1,0 +1,18 @@
+" General
+let barposition = "bottom"
+
+" Move
+map <C-u> scrollPageUp
+map <C-d> scrollPageDown
+map <C-b> scrollFullPageUp
+map <C-f> scrollFullPageDown
+unmap u d
+
+" Tab
+map l nextTab
+map 3 nextTab
+map h previousTab
+map 2 previousTab
+map 1 firstTab
+map 0 lastTab
+map e lastClosedTab
