@@ -1,5 +1,6 @@
 " General
 let barposition = "bottom"
+set noautofocus
 
 " Move
 map <C-u> scrollPageUp
