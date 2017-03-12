@@ -78,9 +78,6 @@ function peco-history-selection() {
     zle reset-prompt
 }
 
-zle -N peco-history-selection
-bindkey '^R' peco-history-selection
-
 ## ptvim
 function ptvim () {
     vim $(pt $@ | peco --query "$LBUFFER" | awk -F : '{print "-c " $2 " " $1}')
