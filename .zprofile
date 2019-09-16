@@ -8,6 +8,8 @@ if [ -e ~/tools/pt_darwin_amd64 ] ; then
     export PATH=~/tools/pt_darwin_amd64:$PATH
 fi
 
+export PATH=$HOME/.nodebrew/current/bin:$PATH
+
 which peco > /dev/null
 if [ $? -eq 0 ] ; then
     zle -N peco-history-selection

@@ -2,6 +2,8 @@
 alias ls='ls -FG'
 alias lsa='ls -dlFG .*'
 alias ll='ls -lFG'
+alias rewf='networksetup'
+alias gl='git branch'
 
 # ------- bindkey
 # Shift-Tabで候補を逆順に補完する
@@ -80,5 +82,21 @@ function peco-history-selection() {
 
 ## ptvim
 function ptvim () {
-    vim $(pt $@ | peco --query "$LBUFFER" | awk -F : '{print "-c " $2 " " $1}')
+    t=$(pt $@ | peco --query "$LBUFFER" | awk -F : '{print "-c " $2 " " $1}')
+    echo $t
+    if [ -z $t ] ; then
+        echo "bye..."
+        return 1
+    fi
+    vim $(echo $t)
+}
+
+## findvim
+function fvim () {
+    f=$(find . -name $@ | peco --query "$LBUFFER")
+    if [ -z $f ] ; then
+        echo "bye..."
+        return 1
+    fi
+    vim $(echo $f)
 }
