@@ -10,6 +10,10 @@ fi
 
 export PATH=$HOME/.nodebrew/current/bin:$PATH
 
+export PATH="$HOME/.pyenv/bin:$PATH"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+
 which peco > /dev/null
 if [ $? -eq 0 ] ; then
     zle -N peco-history-selection

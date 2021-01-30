@@ -4,6 +4,7 @@ alias lsa='ls -dlFG .*'
 alias ll='ls -lFG'
 alias rewf='networksetup'
 alias gl='git branch'
+alias ...='cd ../../'
 
 # ------- bindkey
 # Shift-Tabで候補を逆順に補完する
@@ -100,3 +101,23 @@ function fvim () {
     fi
     vim $(echo $f)
 }
+
+. /usr/local/etc/profile.d/z.sh
+
+function peco-z-search
+{
+  which peco z > /dev/null
+  if [ $? -ne 0 ]; then
+    echo "Please install peco and z"
+    return 1
+  fi
+  local res=$(z | sort -rn | cut -c 12- | uniq | peco)
+  if [ -n "$res" ]; then
+    BUFFER+="cd $res"
+    zle accept-line
+  else
+    return 1
+  fi
+}
+zle -N peco-z-search
+bindkey '^o' peco-z-search
