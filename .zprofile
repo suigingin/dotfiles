@@ -8,9 +8,13 @@ if [ -e ~/tools/pt_darwin_amd64 ] ; then
     export PATH=~/tools/pt_darwin_amd64:$PATH
 fi
 
-export PATH=$HOME/.nodebrew/current/bin:$PATH
 
+## export
+export PATH=$HOME/.nodebrew/current/bin:$PATH
 export PATH="$HOME/.pyenv/bin:$PATH"
+export PATH="$HOME/git/flutter/bin:$PATH"
+
+
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 

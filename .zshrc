@@ -1,10 +1,11 @@
 # ------- alias
 alias ls='ls -FG'
 alias lsa='ls -dlFG .*'
-alias ll='ls -lFG'
+alias ll='ls -ltrFG'
 alias rewf='networksetup'
 alias gl='git branch'
 alias ...='cd ../../'
+alias grep='grep --color'
 
 # ------- bindkey
 # Shift-Tabで候補を逆順に補完する
@@ -35,6 +36,20 @@ PROMPT="%{$fg[green]%}%m:%(?.%F{green}.%F{red})%(?!(´･_･)!(´~_~%))%f%{$res
 %{$reset_color%}%{$fg[green]%}%%%{$reset_color%} "
 PROMPT2="%{$fg[green]%}%_> %{$reset_color%}"
 SPROMPT="%{%B$fg[red]%}correct: %R -> %r [nyae]? %{$reset_color%}"
+
+
+
+# ------- k8s
+alias k='kubectl'
+alias kd='kubectl describe'
+alias kds='kubectl describe'
+
+source "/usr/local/opt/kube-ps1/share/kube-ps1.sh"
+PROMPT='$(kube_ps1)'$PROMPT
+
+#echo "source <(kubectl completion zsh)" >> ~/.zshrc
+source <(kubectl completion zsh)
+
 
 
 # ------- option
@@ -68,20 +83,17 @@ setopt notify
 ## zsh間で履歴を共有する
 setopt share_history
 
-
 # ------- stty
 stty -ixon
 
 
 # ------- function
-## peco history
 function peco-history-selection() {
     BUFFER=`history -n 1 | tail -r  | awk '!a[$0]++' | peco`
     CURSOR=$#BUFFER
     zle reset-prompt
 }
 
-## ptvim
 function ptvim () {
     t=$(pt $@ | peco --query "$LBUFFER" | awk -F : '{print "-c " $2 " " $1}')
     echo $t
@@ -92,7 +104,6 @@ function ptvim () {
     vim $(echo $t)
 }
 
-## findvim
 function fvim () {
     f=$(find . -name $@ | peco --query "$LBUFFER")
     if [ -z $f ] ; then
@@ -121,3 +132,9 @@ function peco-z-search
 }
 zle -N peco-z-search
 bindkey '^o' peco-z-search
+
+
+chpwd() {
+    ls -l
+}
+
