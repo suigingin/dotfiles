@@ -8,6 +8,7 @@ map <C-d> scrollPageDown
 map <C-b> scrollFullPageUp
 map <C-f> scrollFullPageDown
 unmap u d
+iunmap <C-p>
 
 " Tab
 map l nextTab
@@ -17,3 +18,4 @@ map 2 previousTab
 map 1 firstTab
 map 0 lastTab
 map e lastClosedTab
+let blacklists = ["http://www.puyop.com/*","https://gather.town/*","https://jinrouda.smarthr.co.jp/*"]
