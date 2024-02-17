@@ -2,13 +2,15 @@
 set nocompatible
 
 "set syntacColor
-colorscheme molokai
 syntax on
+"colorscheme molokai
+"set t_Co=256
 
 "intendSetting
 set autoindent
-set tabstop=4
-set shiftwidth=4
+set expandtab
+set tabstop=2
+set shiftwidth=2
 
 "setting for scroll
 set scrolloff=3
@@ -26,11 +28,14 @@ set cursorline
 :hi clear CursorLine
 :hi CursorLine gui=underline
 
+:highlight LineNr ctermfg=239
+:hi CursorLineNr term=bold cterm=NONE ctermfg=darkred ctermbg=NONE
 
 "extend cursorMove
 set whichwrap=b,s,h,l,<,>,[,],~
 nnoremap j gj
 nnoremap k gk
+
 
 "number on/off
 nnoremap <C-o> :set number<CR>
@@ -81,6 +86,8 @@ set fileencodings=utf-8
 "setting for statusLine
 set laststatus=2
 set statusline=%<%F\ %m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).':'.&ff.']'}%y%=%l,%c\ %P
+
+" tsxをopen時のerror対応
 let g:hi_insert = 'highlight StatusLine guifg=blue guibg=red gui=none ctermfg=white ctermbg=blue cterm=none'
 if has('syntax')
   augroup InsertHook
@@ -136,6 +143,7 @@ set wildmenu wildmode=list:full
 "
 "map!
 map! <C-e> fprintf(stderr," \n",);
+inoremap jj <ESC>
 "nmap
 nmap <silent> <Tab> 15<Right>
 nmap <silent> <S-Tab> 15<Left>
@@ -145,3 +153,6 @@ nmap N Nzz
 "To use this mapping, we must execure this command "stty -ixon -ixoff"
 nnoremap <C-q> :shell<CR>
 
+autocmd BufNewFile,BufRead *.{html,htm,vue*} set filetype=html
+
+set re=0
