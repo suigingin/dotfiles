@@ -1,11 +1,21 @@
 # ------- alias
 alias ls='ls -FG'
-alias lsa='ls -dlFG .*'
 alias ll='ls -ltrFG'
+alias lsa='ls -dlFG .*'
 alias rewf='networksetup'
+alias g='git'
 alias gl='git branch'
+alias gstart='git checkout main && git pull origin main'
 alias ...='cd ../../'
 alias grep='grep --color'
+alias py='python'
+alias cors='open -n -a /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --args --user-data-dir="/tmp/chrome_dev_test" --disable-web-security'
+alias chrome='/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome'
+alias gi='git-init'
+alias diff='colordiff'
+alias ci='/Applications/Visual\ Studio\ Code\ -\ Insiders.app/Contents/Resources/app/bin/code'
+alias nb='nodebrew'
+#alias aws='ssh -i ~/.ssh/yoko.pem ec2-user@ec2-54-79-141-80.ap-southeast-2.compute.amazonaws.com'
 
 # ------- bindkey
 # Shift-Tabで候補を逆順に補完する
@@ -47,9 +57,14 @@ alias kds='kubectl describe'
 source "/usr/local/opt/kube-ps1/share/kube-ps1.sh"
 PROMPT='$(kube_ps1)'$PROMPT
 
+# ------- source
+#source ~/git/audio/emsdk/emsdk_env.sh
+
 #echo "source <(kubectl completion zsh)" >> ~/.zshrc
 source <(kubectl completion zsh)
 
+# ------- flutter
+alias f='flutter'
 
 
 # ------- option
@@ -133,8 +148,82 @@ function peco-z-search
 zle -N peco-z-search
 bindkey '^o' peco-z-search
 
-
-chpwd() {
-    ls -l
+function git-init () {
+  currentBranch=`git branch -a | grep \*`
+  echo $currentBranch
 }
 
+function ecs () {
+  env=$1
+  echo "env=${env}"
+  if [ "${env}" != "prod" ] && [ "${env}" != "stg" ] && [ "${env}" != "dev1" ] && [ "${env}" != "dev2" ]; then
+    echo "env is invalid. Specify < prod | stg | dev1 | dev2 >"
+    return 1
+  fi
+
+  if [ "${env}" = "prod" ]; then
+     echo "go to prod..."
+     task=`aws ecs list-tasks --cluster salescoreprod-common --family salescoreprod-worker --profile salescore-prod | jq '.taskArns[0]'`
+     echo '--- copy and exec following command --->\n'
+     echo 'aws ecs execute-command --cluster salescoreprod-common \'
+     echo "--task ${task} \\"
+     echo '--container worker \'
+     echo '--interactive \'
+     echo '--command "/bin/sh" \'
+     echo '--profile salescore-prod\n'
+  elif [ "${env}" = "stg" ]; then
+     echo "go to stg..."
+     task=`aws ecs list-tasks --cluster salescorestg-common --family salescorestg-worker --profile salescore-stg | jq '.taskArns[0]'`
+     echo '--- copy and exec following command --->\n'
+     echo 'aws ecs execute-command --cluster salescorestg-common \'
+     echo "--task ${task} \\"
+     echo '--container worker \'
+     echo '--interactive \'
+     echo '--command "/bin/sh" \'
+     echo '--profile salescore-stg\n'
+  elif [ "${env}" = "dev1" ]; then
+     echo "go to dev1..."
+     task=`aws ecs list-tasks --cluster salescoredev1-common --family salescoredev1-worker --profile salescore-dev | jq '.taskArns[0]'`
+     echo '--- copy and exec following command --->\n'
+     echo 'aws ecs execute-command --cluster salescoredev1-common \'
+     echo "--task ${task} \\"
+     echo '--container worker \'
+     echo '--interactive \'
+     echo '--command "/bin/sh" \'
+     echo '--profile salescore-dev\n'
+  else
+     echo "go to dev2..."
+     task=`aws ecs list-tasks --cluster salescoredev2-common --family salescoredev2-worker --profile salescore-dev | jq '.taskArns[0]'`
+     echo '--- copy and exec following command --->\n'
+     echo 'aws ecs execute-command --cluster salescoredev2-common \'
+     echo "--task ${task} \\"
+     echo '--container worker \'
+     echo '--interactive \'
+     echo '--command "/bin/sh" \'
+     echo '--profile salescore-dev\n'
+  fi
+}
+
+
+#export PYENV_ROOT="$HOME/.pyenv"
+#export PATH="$PYENV_ROOT/shims:$PATH"
+#eval "$(pyenv init --path)"
+
+eval "$(direnv hook zsh)"
+
+export LDFLAGS="-L/usr/local/opt/zlib/lib"
+export CPPFLAGS="-I/usr/local/opt/zlib/include"
+export PKG_CONFIG_PATH="/usr/local/opt/zlib/lib/pkgconfig"
+export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
+export SPRING_DATASOURCE_PASSWORD=meiji
+
+chpwd() {
+     ls -l
+}
+
+# bun completions
+[ -s "/Users/suigingin/.bun/_bun" ] && source "/Users/suigingin/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
